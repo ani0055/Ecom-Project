@@ -3,10 +3,9 @@ package com.animesh.backend.controller;
 import com.animesh.backend.model.Product;
 import com.animesh.backend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,13 +21,18 @@ public class ProductController {
         this.service = service;
     }
 
-    @RequestMapping("/")
-    public String greet(){
-        return "Hola Amigos";
+    @GetMapping("/products")
+    public ResponseEntity<List<Product>> getAllProducts(){ //using responseEntity helps us get the http  status
+        return new ResponseEntity<>(service.getAllProducts(), HttpStatus.OK);
     }
 
-    @GetMapping("/products")
-    public List<Product> getAllProducts(){
-        return service.getAllProducts();
+    @GetMapping("/product/{id}")
+    public ResponseEntity<Product> getProduct(@PathVariable int id){
+
+        Product product = service.getProductById(id);
+
+        if(product != null) return new ResponseEntity<>(product, HttpStatus.OK);
+
+        else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
