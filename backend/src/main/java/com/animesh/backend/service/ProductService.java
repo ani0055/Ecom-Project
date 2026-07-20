@@ -4,6 +4,7 @@ import com.animesh.backend.model.Product;
 import com.animesh.backend.repo.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -43,4 +44,9 @@ public class ProductService {
 
     public void deleteProduct(int id) {
         repo.deleteById(id);    }
+
+    @Transactional
+    public List<Product> searchProducts(String keyword) {
+        return repo.searchProducts(keyword);
+    }
 }
