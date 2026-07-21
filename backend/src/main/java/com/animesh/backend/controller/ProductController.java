@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@CrossOrigin // helps us connect to the frontend cause frontend is running on port 5173 and backend on 8080 so we get a cros error
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true") // helps us connect to the frontend cause frontend is running on port 5173 and backend on 8080 so we get a cros error
 @RequestMapping("/api")
 public class ProductController {
 
